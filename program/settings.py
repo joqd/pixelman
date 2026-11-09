@@ -10,23 +10,40 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@*-jts$19&+z#mf=cz)sb$&=na%@00-=7f*r$uca#l3mm(#4_*'
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-@*-jts$19&+z#mf=cz)sb$&=na%@00-=7f*r$uca#l3mm(#4_*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+BOT_TOKEN = env('BOT_TOKEN')
+
+ADMINS = env.list('ADMINS')
+
+WEBHOOK_SECRET = 'B9N7mmgvbSJ5PrL2Pk6zt3hmuTA41uazYJy_jcflxIw'
+
+WEBHOOK_URL = env('WEBHOOK_URL', default='http://127.0.0.1:8000/webhook/pixelman/')
+
+LOCAL_TELEGRAM_API = env('LOCAL_TELEGRAM_API', default='http://127.0.0.1:8081')
+
+APPEND_SLASH = True
 
 # Application definition
 
@@ -37,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.webhook',
 ]
 
 MIDDLEWARE = [
