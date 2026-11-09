@@ -39,9 +39,9 @@ ADMINS = env.list('ADMINS')
 
 WEBHOOK_SECRET = 'B9N7mmgvbSJ5PrL2Pk6zt3hmuTA41uazYJy_jcflxIw'
 
-WEBHOOK_URL = env('WEBHOOK_URL', default='http://127.0.0.1:8000/webhook/pixelman/')
+WEBHOOK_URL = env('WEBHOOK_URL', default='http://127.0.0.1:8000/webhook/pixelman/').strip('/') + '/'
 
-LOCAL_TELEGRAM_API = env('LOCAL_TELEGRAM_API', default='http://127.0.0.1:8081')
+LOCAL_TELEGRAM_API = env('LOCAL_TELEGRAM_API', default='http://127.0.0.1:8081').strip('/')
 
 APPEND_SLASH = True
 
